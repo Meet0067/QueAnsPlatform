@@ -34,7 +34,7 @@ public class TagController {
 		}
 	}
 	@PutMapping("/tag")
-	public ResponseEntity<?> addTag(@RequestParam("tag_name") String tag_name,@RequestParam("tag_id") long tag_id){		
+	public ResponseEntity<?> updateTag(@RequestParam("tag_name") String tag_name,@RequestParam("tag_id") long tag_id){		
 		try {
 			Tag t = new Tag();
 			t.setTag_name(tag_name);

@@ -26,7 +26,7 @@ public class  AnswerLikeController{
 	@Autowired
 	AnswerService answerService;
 	@PostMapping("/answers_like")
-	public ResponseEntity<?> addAnswer(@Valid AnswerLike answerLike){	
+	public ResponseEntity<?> addAnswerLike(@Valid AnswerLike answerLike){	
 		
 		try {
 			if(!answerLikeService.getAnswerLikeByQID(answerLike.getAnswer_id(),answerLike.getId()).isPresent()) {

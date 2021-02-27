@@ -38,7 +38,7 @@ public class UserController {
 				throw new Exception();
 			}
 		}catch (Exception e) {
-			return new ResponseEntity<>("Incorrect Email and Pass", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Incorrect Email or Pass", HttpStatus.BAD_REQUEST);
 		}
 		
 	}

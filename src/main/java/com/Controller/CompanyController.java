@@ -34,7 +34,7 @@ public class CompanyController {
 		}
 	}
 	@PutMapping("/company")
-	public ResponseEntity<?> addcompany(@RequestParam String company_name,@RequestParam long company_id){		
+	public ResponseEntity<?> updatecompany(@RequestParam String company_name,@RequestParam long company_id){		
 		try {
 			Company company = new Company();
 			company.setCompany_name(company_name);

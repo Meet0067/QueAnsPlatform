@@ -73,7 +73,7 @@ public class  QuestionController{
 
 			}else {
 				List<Company> company = new ArrayList<Company>() ;
-				company.add(companyService.getCompanyById(10).get());
+				company.add(companyService.getCompanyById(1).get());
 				question.setCompany(company);
 			}
 			if(tags!=null) {
@@ -85,14 +85,14 @@ public class  QuestionController{
 						tag.add(tagService.getTagById(s).get());
 						//question.setTag(tag);
 					}else {
-						return new ResponseEntity<>("Question Not Created Due to Unavailable TagId "+ s, HttpStatus.ACCEPTED);
+						return new ResponseEntity<>("Question Not Created Due to Unavailable TagId "+ s, HttpStatus.BAD_REQUEST);
 					}
 				}
 				question.setTag(tag);
 
 			}else {
 				List<Tag> tag = new ArrayList<Tag>() ;
-				tag.add(tagService.getTagById(12).get());
+				tag.add(tagService.getTagById(1).get());
 				question.setTag(tag);
 			}
 			if(subtopic_id!=null) {
@@ -106,7 +106,7 @@ public class  QuestionController{
 						subTopic.add(subTopicService.getSubTopicById(s).get());
 						
 					}else {
-						return new ResponseEntity<>("Question Not Created Due to Unavailable SubTopicId "+ s, HttpStatus.ACCEPTED);
+						return new ResponseEntity<>("Question Not Created Due to Unavailable SubTopicId "+ s, HttpStatus.BAD_REQUEST);
 					}
 				}
 				question.setSubTopic(subTopic);
@@ -116,7 +116,7 @@ public class  QuestionController{
 			if(userService.findUserById(id).isPresent()) {
 				question.setUser(userService.findUserById(id).get());
 			}else {
-				return new ResponseEntity<>("Question Not Created Due to Unavailable UserId "+ id, HttpStatus.ACCEPTED);
+				return new ResponseEntity<>("Question Not Created Due to Unavailable UserId "+ id, HttpStatus.BAD_REQUEST);
 			}
 			Date d = new Date();
 			question.setQuestion_date(d);
@@ -206,12 +206,6 @@ public class  QuestionController{
 		
 		ResponseQuestionBean rQB ;
 		ResponseAnswerBean rAB;
-		
-		System.out.println(company_id);
-		System.out.println(subtopic_id);
-		System.out.println(tag_id);
-		System.out.println(date);
-		System.out.println(likes);
 		if(tag_id==null) {
 			tag_id = tagService.getAllTags();
 		}
@@ -229,7 +223,6 @@ public class  QuestionController{
 		}
 		
 		List<Question> questions = questionService.getQuestionByFilter(likes, company_id,tag_id, subtopic_id,new SimpleDateFormat("yyyy-MM-dd").parse(date));
-		System.out.println("size of list is" + questions.size());
 		for(Question q:questions) {
 			rAB = new ResponseAnswerBean();
 			rQB = new ResponseQuestionBean();

@@ -42,7 +42,7 @@ public class SubTopicController {
 				long subtopic_id = subTopicService.addSubTopic(subTopic);
 				return new ResponseEntity<>("SubTopic Created with Id" + subtopic_id, HttpStatus.ACCEPTED);		
 			}else {
-				throw new Exception();
+				return new ResponseEntity<>("SubTopic Not Created due to Unavailable Topic", HttpStatus.BAD_REQUEST);
 			}
 			
 		}catch (Exception e) {
@@ -63,7 +63,7 @@ public class SubTopicController {
 				subTopicService.updateSubTopic(subTopic);
 				return new ResponseEntity<>("SubTopic Updated", HttpStatus.ACCEPTED);		
 			}else {
-				throw new Exception();
+				return new ResponseEntity<>("SubTopic Not Created due to Unavailable Topic or SubTopic", HttpStatus.BAD_REQUEST);
 			}
 				
 		}catch (Exception e) {
