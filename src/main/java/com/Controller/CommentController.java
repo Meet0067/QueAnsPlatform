@@ -5,10 +5,14 @@ import java.util.Date;
 import java.util.Date;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +23,7 @@ import com.Service.AnswerService;
 import com.Service.CommentService;
 import com.Service.UserService;
 
-
+//@Validated
 @RestController
 public class  CommentController{
 	@Autowired
@@ -31,8 +35,11 @@ public class  CommentController{
 	@Autowired
 	AnswerService answerService;
 	@PostMapping("/comments")
-	public ResponseEntity<?> addComment(@RequestParam String comment_text,@RequestParam(name = "answer_id") Long answer_id,@RequestParam("user_id") Long id ){		
-		
+	//@Size(max = 500,min = 50 , message = "Comment length must be between (50,500) characters !!")
+	public ResponseEntity<?> addComment( @RequestParam String comment_text,@RequestParam(name = "answer_id") Long answer_id,@RequestParam("user_id") Long id ){		
+		if(comment_text.length() < 50 | comment_text.length() > 500) {
+			return new ResponseEntity<>("comment Not Created Due to comment length which should be in between (50,500)", HttpStatus.BAD_REQUEST);
+		}
 		try {
 			Comment comment = new Comment();
 			comment.setComment_(comment_text);

@@ -7,11 +7,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
+import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +35,7 @@ import com.Service.SubTopicService;
 import com.Service.TagService;
 import com.Service.UserService;
 
-
+//@Validated
 @RestController
 public class  QuestionController{
 	@Autowired
@@ -52,10 +53,13 @@ public class  QuestionController{
 	@Autowired
 	CommentService commentService;
 	@PostMapping("/questions")
-	public ResponseEntity<?> addQuestion(@RequestParam String question_,@RequestParam(name = "company_id",required = false) Long[] company_id,@RequestParam(name = "subtopic_id",required = true) Long[] subtopic_id,@RequestParam("user_id") Long id,
+	//@Size(max = 500,min = 50 , message = "Question length must be between (50,500) characters !!")
+	public ResponseEntity<?> addQuestion(  @RequestParam String question_,@RequestParam(name = "company_id",required = false) Long[] company_id,@RequestParam(name = "subtopic_id",required = true) Long[] subtopic_id,@RequestParam("user_id") Long id,
 			@RequestParam(name = "tags", required = false) Long[] tags ){
 		
-		
+		if(question_.length() < 50 | question_.length() > 500) {
+			return new ResponseEntity<>("Question Not Created Due to question length which should be in between (50,500)", HttpStatus.BAD_REQUEST);
+		}
 		try {
 			Question question = new Question();
 			question.setQuestion_(question_);
@@ -66,7 +70,7 @@ public class  QuestionController{
 						company.add(companyService.getCompanyById(s).get());
 						
 					}else {
-						return new ResponseEntity<>("Company Not Added Due to Unavailable CompanyId "+ s, HttpStatus.ACCEPTED);
+						return new ResponseEntity<>("Company Not Added Due to Unavailable CompanyId "+ s, HttpStatus.BAD_REQUEST);
 					}
 				}
 				question.setCompany(company);

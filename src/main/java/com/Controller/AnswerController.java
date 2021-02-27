@@ -1,10 +1,14 @@
 package com.Controller;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +19,7 @@ import com.Service.CompanyService;
 import com.Service.QuestionService;
 import com.Service.TagService;
 import com.Service.UserService;
-
+//@Validated
 @RestController
 public class  AnswerController{
 	@Autowired
@@ -29,8 +33,11 @@ public class  AnswerController{
 	@Autowired
 	CompanyService companyService;
 	@PostMapping("/answers")
-	public ResponseEntity<?> addAnswer(@RequestParam String answer_,@RequestParam(name = "question_id") Long question_id,@RequestParam("user_id") Long id ){		
-		
+	//@Size(max = 500,min = 50 , message = "Answer length must be between (50,500) characters !!")
+	public ResponseEntity<?> addAnswer(  @RequestParam String answer_,@RequestParam(name = "question_id") Long question_id,@RequestParam("user_id") Long id ){		
+		if(answer_.length() < 50 | answer_.length() > 500) {
+			return new ResponseEntity<>("Answer Not Created Due to answer length which should be in between (50,500)", HttpStatus.BAD_REQUEST);
+		}
 		try {
 			Answer answer = new Answer();
 			answer.setAnswer_(answer_);
