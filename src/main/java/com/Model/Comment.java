@@ -29,7 +29,6 @@ public class Comment {
     private Long comment_id;
 	
 	@NotBlank
-    @Size(min = 50, max = 500)
     @Column(name = "comment_", nullable = false)
     private String comment_;
 

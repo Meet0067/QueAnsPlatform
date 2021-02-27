@@ -14,7 +14,7 @@ import com.Model.Question;
 public interface QuestionRepository extends JpaRepository<Question,Long> {
 	
 	@Query(value = "select question_id from ("
-			+ " select t1.question_id,t1.question_,t1.question_likes,t1.question_date,t2.tag_id,t3.company_id,t4.subtopic_id from question t1"
+			+ " select t1.question_id,t1.question_likes,t1.question_date,t2.tag_id,t3.company_id,t4.subtopic_id from question t1"
 			+ " inner join  question_tag t2 on t1.question_id = t2.question_id"
 			+ " inner join question_company_mapping t3 on t1.question_id =t3.question_id "
 			+ " inner join question_subtopic_mapping t4 on t1.question_id = t4.question_id)"

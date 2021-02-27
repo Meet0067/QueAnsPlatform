@@ -21,11 +21,9 @@ public class QuestionLikeService {
 		QuestionLikeRepository questionLikeRepository;
 
 		public long addQuestionLike(@Valid QuestionLike questionLike) {
-			// TODO Auto-generated method stub
-			
-			
 			return questionLikeRepository.save(questionLike).getQuestion_like_id();
 		}
+		
 		public Optional<QuestionLike> getQuestionLikeByQID(long question_id,long id){
 			return questionLikeRepository.checkUserLike(question_id,id);
 		}

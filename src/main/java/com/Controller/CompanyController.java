@@ -1,9 +1,6 @@
 package com.Controller;
 
 import java.util.Optional;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +16,7 @@ import com.Service.CompanyService;
 
 @RestController
 public class CompanyController {
+	
 	@Autowired
 	CompanyService companyService;
 
@@ -44,11 +42,11 @@ public class CompanyController {
 				companyService.updateCompany(company);
 				return new ResponseEntity<>("company Updated", HttpStatus.ACCEPTED);		
 			}else {
-				throw new Exception();
+				return new ResponseEntity<>("company Not Updated Due to unavailable company_id", HttpStatus.BAD_REQUEST);
 			}
 				
 		}catch (Exception e) {
-			return new ResponseEntity<>("company Not Updated Due to unavailable company_id", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("company Not Updated ", HttpStatus.BAD_REQUEST);
 		}
 	}
 	@GetMapping("/company")

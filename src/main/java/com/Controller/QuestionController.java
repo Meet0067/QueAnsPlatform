@@ -67,14 +67,12 @@ public class  QuestionController{
 				List<Company> company = new ArrayList<Company>() ;
 				for(Long s:company_id) {
 					if(companyService.getCompanyById(s).isPresent()) {
-						company.add(companyService.getCompanyById(s).get());
-						
+						company.add(companyService.getCompanyById(s).get());						
 					}else {
 						return new ResponseEntity<>("Company Not Added Due to Unavailable CompanyId "+ s, HttpStatus.BAD_REQUEST);
 					}
 				}
 				question.setCompany(company);
-
 			}else {
 				List<Company> company = new ArrayList<Company>() ;
 				company.add(companyService.getCompanyById(1).get());
@@ -93,7 +91,6 @@ public class  QuestionController{
 					}
 				}
 				question.setTag(tag);
-
 			}else {
 				List<Tag> tag = new ArrayList<Tag>() ;
 				tag.add(tagService.getTagById(1).get());
@@ -114,9 +111,7 @@ public class  QuestionController{
 					}
 				}
 				question.setSubTopic(subTopic);
-
-			}						
-		
+			}								
 			if(userService.findUserById(id).isPresent()) {
 				question.setUser(userService.findUserById(id).get());
 			}else {
@@ -166,12 +161,10 @@ public class  QuestionController{
 					break;
 				}
 				if(subTopicService.getSubTopicById(s.getSubtopic_id()).isPresent()) {
-					topics.add(subTopicService.getSubTopicById(s.getSubtopic_id()).get().getTopic().getTopic_name());
-					
+					topics.add(subTopicService.getSubTopicById(s.getSubtopic_id()).get().getTopic().getTopic_name());					
 				}
 			}
-			rQB.setTopics(topics);
-			
+			rQB.setTopics(topics);			
 			List<ResponseAnswerBean> answers = new ArrayList<ResponseAnswerBean>();
 			List<Answer> answer = answerService.getAnswerByQId(question_id);
 			for(Answer a :answer) {
@@ -194,20 +187,17 @@ public class  QuestionController{
 			}
 			
 			rQB.setAnswers(answers);
-			return rQB;
-			
+			return rQB;			
 		}else {
 			return null;
-			//return new ResponseEntity<>("Question_id did not Found "+ question_id, HttpStatus.BAD_REQUEST);
-		}
-		
+		}		
 	}
 	
 	@GetMapping("/Filter_Question")
 	public List<ResponseQuestionBean> getFiterQuestions(@RequestParam(name = "company_id",required = false) Long[] company_id,@RequestParam(name = "subtopic_id",required=false) Long[] subtopic_id,@RequestParam(name = "likes",required=false) Long likes,
 			@RequestParam(name = "tag_id", required = false) Long[] tag_id,@RequestParam(name = "date",required=false) String date ) throws ParseException{
-		List<ResponseQuestionBean> rQBL = new ArrayList<ResponseQuestionBean>();
 		
+		List<ResponseQuestionBean> rQBL = new ArrayList<ResponseQuestionBean>();		
 		ResponseQuestionBean rQB ;
 		ResponseAnswerBean rAB;
 		if(tag_id==null) {
@@ -258,8 +248,7 @@ public class  QuestionController{
 					//question.setTag(tag);
 				}
 			}
-			rQB.setTags(tags);
-			
+			rQB.setTags(tags);			
 			Optional<Answer> ans = answerService.getMostLikesAnswerById(q.getQuestion_id());
 			if(ans.isPresent()) {
 				rAB.setAnswer(ans.get().getAnswer_());
@@ -272,70 +261,6 @@ public class  QuestionController{
 			rQBL.add(rQB);
 		}
 		return rQBL;
-		/*
-		if(questionService.getQuestionById(Long.parseLong((String)json.get("question_id"))).isPresent()) {
-			
-			Question question = questionService.getQuestionById(Long.parseLong(json.get("question_id"))).get();
-			rQB.setQuestion_id(question_id);
-			rQB.setQuestion(question.getQuestion_());
-			rQB.setQuestion_likes(question.getQuestion_likes());
-			List<Company> li = question.getCompany();
-			List<String> companies  = new ArrayList<String>();
-			for(Company c:li) {
-				if(companyService.getCompanyById(c.getCompany_id()).isPresent())
-					companies.add(companyService.getCompanyById(c.getCompany_id()).get().getCompany_name());					
-				}
-			rQB.setCompanies(companies);
-			List<String> tags = new ArrayList<String>() ;
-
-			for(Tag s:question.getTag()) {				
-				if(tagService.getTagById(s.getTag_id()).isPresent()) {
-					tags.add(tagService.getTagById(s.getTag_id()).get().getTag_name());
-					//question.setTag(tag);
-				}
-			}
-			rQB.setTags(tags);
-			List<String> topics = new ArrayList<String>();
-			List<SubTopic> lis = question.getSubTopic();
-			for(SubTopic s:lis) {
-				if(s==null) {
-					break;
-				}
-				if(subTopicService.getSubTopicById(s.getSubtopic_id()).isPresent()) {
-					topics.add(subTopicService.getSubTopicById(s.getSubtopic_id()).get().getTopic().getTopic_name());
-					
-				}
-			}
-			rQB.setTopics(topics);
-			
-			List<ResponseAnswerBean> answers = new ArrayList<ResponseAnswerBean>();
-			List<Answer> answer = answerService.getAnswerByQId(question_id);
-			for(Answer a :answer) {
-				rAB = new ResponseAnswerBean();
-				rAB.setAnswer(a.getAnswer_());
-				rAB.setAnswer_likes(a.getAnswer_likes());
-				rAB.setUser_id(a.getUser().getId());
-				List<Comment> comment = commentService.getCommentsByAID(a.getAnswer_id());
-				List<ResponseCommentBean> comments = new ArrayList<ResponseCommentBean>();
-				
-				for(Comment c:comment) {
-					rCB = new ResponseCommentBean();
-					rCB.setUser_id(c.getUser().getId());
-					rCB.setComment(c.getComment_());
-					rCB.setComment_date(c.getCommentDate());
-					comments.add(rCB);					
-				}
-				answers.add(rAB);
-				rAB.setComments(comments);
-			}
-			
-			rQB.setAnswers(answers);
-			return rQB;
-			
-		}else {
-			return null;
-			//return new ResponseEntity<>("Question_id did not Found "+ question_id, HttpStatus.BAD_REQUEST);
-		}
-		*/
+		
 	}
 }

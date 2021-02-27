@@ -18,10 +18,7 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	public User validateuser(String email, String pass) {
-		
-		//User user =userDao.getUserDataByEmail(email);
 		return  userRepository.findByEmailAndPassword(email,pass);
-
 	}
 
 	public long addUser(User user) {		

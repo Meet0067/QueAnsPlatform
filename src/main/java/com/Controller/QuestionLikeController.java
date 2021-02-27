@@ -17,14 +17,13 @@ import com.Service.UserService;
 
 @RestController
 public class  QuestionLikeController{
+	
 	@Autowired
 	QuestionLikeService questionLikeService;
 	@Autowired
 	TagService tagService;
 	@Autowired
-	UserService userService;
-	
-	
+	UserService userService;	
 	@Autowired
 	QuestionService questionService;
 	@PostMapping("/questions_like")
@@ -36,22 +35,18 @@ public class  QuestionLikeController{
 					return new ResponseEntity<>("QuestionLike Not Created Due to Unavailable UserId "+ questionLike.getId(), HttpStatus.BAD_REQUEST);
 				}
 				
-				if(questionService.getQuestionById(questionLike.getQuestion_id()).isPresent()) {
-					//questionLike.setQuestion(questionService.getQuestionById(question_id).get());
+				if(questionService.getQuestionById(questionLike.getQuestion_id()).isPresent()) {					
 					Question question = questionService.getQuestionById(questionLike.getQuestion_id()).get();
 					question.setQuestion_likes(questionService.getQuestionById(questionLike.getQuestion_id()).get().getQuestion_likes() + 1);
 					long total_likes = questionService.updateQuestionLikes(question);
 					long id_que = questionLikeService.addQuestionLike(questionLike);
-					return new ResponseEntity<>("Total Likes "+ total_likes, HttpStatus.ACCEPTED);	
-					
+					return new ResponseEntity<>("Total Likes "+ total_likes, HttpStatus.ACCEPTED);						
 				}else {
 					return new ResponseEntity<>("QuestionLike Not Created Due to Unavailable QuestionId "+ questionLike.getQuestion_id(), HttpStatus.BAD_REQUEST);
 				}			
 			}else {
 				return new ResponseEntity<>("Question has Already Liked ", HttpStatus.BAD_REQUEST);
-			}
-
-					
+			}					
 		}catch (Exception e) {
 			return new ResponseEntity<>("QuestionLike Not Created", HttpStatus.BAD_REQUEST);
 		}

@@ -14,7 +14,6 @@ public interface QuestionLikeRepository extends JpaRepository<QuestionLike,Long>
 
 	
 	@Query(value = "SELECT * FROM questionlike WHERE question_id = ?1 and id =?2", nativeQuery = true)
-	//@Query("SELECT q from questionlike where q.question_id =:question_id and q.id = :id")
 	Optional<QuestionLike> checkUserLike(long question_id,long id);
 	
     

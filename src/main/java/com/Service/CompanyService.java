@@ -15,29 +15,22 @@ public class CompanyService {
 	private CompanyRepository companyRepository;
 	
 	public long addCompany(Company company) {
-		return companyRepository.save(company).getCompany_id();
-		// TODO Auto-generated method stub
-		
+		return companyRepository.save(company).getCompany_id();	
 	}
 
-	public void updateCompany(Company company) {
-		// TODO Auto-generated method stub
-		
+	public void updateCompany(Company company) {		
 		companyRepository.save(company);
 	}
 
 	public Optional<Company> getCompanyById(long company_id) {
-		// TODO Auto-generated method stub
 		return companyRepository.findById(company_id);
 	}
 
 	public void deleteById(long company_id) {
-		// TODO Auto-generated method stub
 		companyRepository.deleteById(company_id);
 	}
 
 	public Long[] getAllCompanies() {
-		// TODO Auto-generated method stub
 		return companyRepository.getAllCompanies();
 	}
 }

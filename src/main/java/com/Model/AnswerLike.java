@@ -22,6 +22,7 @@ public class AnswerLike {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonIgnore
     private Long answer_like_id;
+	
 	@Column(name = "id", nullable = false)
     private long id;
 

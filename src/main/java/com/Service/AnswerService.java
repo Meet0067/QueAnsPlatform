@@ -19,30 +19,23 @@ public class AnswerService {
 		@Autowired
 		AnswerRepository answerRepository;
 
-		public long addAnswer(@Valid Answer answer) {
-			// TODO Auto-generated method stub
-			
-			
+		public long addAnswer(@Valid Answer answer) {			
 			return answerRepository.save(answer).getAnswer_id();
 		}
+		
 		public Optional<Answer> getAnswerById(long id) {		
-			return answerRepository.findById(id);
-			
+			return answerRepository.findById(id);			
 		}
-		public long updateAnswerLikes(Answer answer) {
-			// TODO Auto-generated method stub
-			
-			
-				return answerRepository.save(answer).getAnswer_likes();
-				
-			
+		
+		public long updateAnswerLikes(Answer answer) {		
+				return answerRepository.save(answer).getAnswer_likes();	
 		}
+		
 		public List<Answer> getAnswerByQId(long question_id) {
-			// TODO Auto-generated method stub
 			return answerRepository.getAnswers(question_id);
 		}
+		
 		public Optional<Answer> getMostLikesAnswerById(Long question_id) {
-			// TODO Auto-generated method stub
 			return answerRepository.getMostLikesAnswer(question_id);
 		}
 		

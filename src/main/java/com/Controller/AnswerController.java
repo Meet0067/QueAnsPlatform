@@ -1,14 +1,7 @@
 package com.Controller;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,18 +37,15 @@ public class  AnswerController{
 			if(questionService.getQuestionById(question_id).isPresent()) {
 				answer.setQuestion(questionService.getQuestionById(question_id).get());
 			}else {
-				return new ResponseEntity<>("answer Not Created Due to Unavailable QuestionId "+ question_id, HttpStatus.ACCEPTED);
+				return new ResponseEntity<>("answer Not Created Due to Unavailable QuestionId "+ question_id, HttpStatus.BAD_REQUEST);
 			}
 			if(userService.findUserById(id).isPresent()) {
 				answer.setUser(userService.findUserById(id).get());
 			}else {
-				return new ResponseEntity<>("answer Not Created Due to Unavailable UserId "+ id, HttpStatus.ACCEPTED);
+				return new ResponseEntity<>("answer Not Created Due to Unavailable UserId "+ id, HttpStatus.BAD_REQUEST);
 			}
 			answer.setAnswer_likes(0);
-			long id_que = answerService.addAnswer(answer);
-		
-			
-			
+			long id_que = answerService.addAnswer(answer);			
 			
 			return new ResponseEntity<>("answer Created with Id "+ id_que, HttpStatus.ACCEPTED);			
 		}catch (Exception e) {

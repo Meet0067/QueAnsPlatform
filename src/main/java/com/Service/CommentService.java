@@ -15,12 +15,13 @@ public class CommentService {
 
 	@Autowired
 	CommentRepository commentRepository;
+	
 	public long addComment(@Valid Comment comment) {
 		
 		 return commentRepository.save(comment).getComment_id();
 	}
+	
 	public List<Comment> getCommentsByAID(Long answer_id) {
-		// TODO Auto-generated method stub
 		return commentRepository.getcommentsByAID(answer_id);
 	}
 

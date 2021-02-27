@@ -25,7 +25,6 @@ public class Answer {
     private Long answer_id;
 	
 	@NotBlank
-    @Size(min = 50, max = 500)
     @Column(name = "answer_", nullable = false)
     private String answer_;
 

@@ -28,12 +28,10 @@ public class QuestionService {
 		}
 
 		public Optional<Question> getQuestionById(Long question_id) {
-			// TODO Auto-generated method stub
 			 return questionRepository.findById(question_id);
 		}
 		
 		public List<Question> getQuestionByFilter(Long question_like,Long[] company_id,Long[] tag_id,Long[] subtopic_id,Date date) {
-			// TODO Auto-generated method stub
 			Set<Long> li = questionRepository.getQidForFilterQuestion(question_like,company_id,tag_id,subtopic_id,date);
 			List<Question> questions = new ArrayList<Question>();
 			for(Long l:li) {

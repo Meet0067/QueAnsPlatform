@@ -17,7 +17,6 @@ public class Topic{
     private Long topic_id;
 
     @NotBlank
-
     @Column(name = "topic_name", nullable = false)
     private String topic_name;
 

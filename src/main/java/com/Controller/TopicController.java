@@ -45,11 +45,11 @@ public class TopicController {
 				topicService.updateTopic(t);
 				return new ResponseEntity<>("Topic Updated", HttpStatus.ACCEPTED);		
 			}else {
-				throw new Exception();
+				return new ResponseEntity<>("Topic Not Updated Due to unavailable topic_id "+ topic_id , HttpStatus.BAD_REQUEST);
 			}
 				
 		}catch (Exception e) {
-			return new ResponseEntity<>("Topic Not Updated Due to unavailable topic_id", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Topic Not Updated ", HttpStatus.BAD_REQUEST);
 		}
 	}
 	@GetMapping("/topic")
@@ -59,7 +59,7 @@ public class TopicController {
 			if(topic.isPresent()) {
 				return new ResponseEntity<>(topic.get(), HttpStatus.ACCEPTED);	
 			}else {
-				throw new Exception();
+				return new ResponseEntity<>("Topic Not Found Due to unavailable topic_id " + topic_id , HttpStatus.BAD_REQUEST);
 			}
 					
 		}catch (Exception e) {
@@ -72,7 +72,7 @@ public class TopicController {
 			 topicService.deleteById(topic_id);
 			 return new ResponseEntity<>("Topic Deleted", HttpStatus.ACCEPTED);			
 		}catch (Exception e) {
-			return new ResponseEntity<>("Topic Not Deleted due to unavailable topic_id", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Topic Not Deleted due to unavailable topic_id"+ topic_id , HttpStatus.BAD_REQUEST);
 		}
 	}
 	

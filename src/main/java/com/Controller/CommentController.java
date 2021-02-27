@@ -1,20 +1,10 @@
 package com.Controller;
 
 import java.util.Date;
-
-import java.util.Date;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,13 +17,12 @@ import com.Service.UserService;
 @RestController
 public class  CommentController{
 	@Autowired
-	CommentService commentService;
-	
+	CommentService commentService;	
 	@Autowired
-	UserService userService;
-	
+	UserService userService;	
 	@Autowired
 	AnswerService answerService;
+	
 	@PostMapping("/comments")
 	//@Size(max = 500,min = 50 , message = "Comment length must be between (50,500) characters !!")
 	public ResponseEntity<?> addComment( @RequestParam String comment_text,@RequestParam(name = "answer_id") Long answer_id,@RequestParam("user_id") Long id ){		
