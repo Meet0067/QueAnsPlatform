@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModelProperty;
 
 
@@ -24,6 +26,7 @@ public class Tag {
 	private String tag_name;
 
 	@ManyToMany(mappedBy = "tag")
+	@JsonIgnore
 	List<Question> question;
 	
 	public List<Question> getQuestion() {

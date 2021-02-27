@@ -39,8 +39,8 @@ public class TagController {
 			Tag t = new Tag();
 			t.setTag_name(tag_name);
 			t.setTag_id(tag_id);
-			Optional<Tag> topic_found = tagService.getTagById(tag_id);
-			if (topic_found.isPresent()) {
+			Optional<Tag> tag_found = tagService.getTagById(tag_id);
+			if (tag_found.isPresent()) {
 				tagService.updateTag(t);
 				return new ResponseEntity<>("Tag Updated", HttpStatus.ACCEPTED);		
 			}else {
@@ -54,8 +54,12 @@ public class TagController {
 	@GetMapping("/tag")
 	public ResponseEntity<?> getTag(@RequestParam("tag_id") long tag_id){		
 		try {
-			Optional<Tag> tag = tagService.getTagById(tag_id);
-			return new ResponseEntity<>(tag, HttpStatus.ACCEPTED);			
+			Optional<Tag> tag_found = tagService.getTagById(tag_id);
+			if (tag_found.isPresent()) {
+				return new ResponseEntity<>(tag_found.get(), HttpStatus.ACCEPTED);		
+			}else {
+				throw new Exception();
+			}			
 		}catch (Exception e) {
 			return new ResponseEntity<>("Tag Not Found", HttpStatus.BAD_REQUEST);
 		}
